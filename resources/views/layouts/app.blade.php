@@ -22,25 +22,25 @@
                     <!-- <h2 class="text-2xl font-bold text-gray-200 mb-6">Dashboard</h2> -->
                     <ul class="space-y-4">
                         <li>
-                            <a href="{{ route('vehicle.tax') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                            <a href="{{ route('vehicle-tax.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
                                 Vehicle Tax
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('vehicle.permit') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                        {{-- <li>
+                            <a href="{{ route('vehicle-permit.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
                                 Vehicle Permit
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('fitness.certificate') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                            <a href="{{ route('fitness-certificate.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
                                 Fitness Certificate
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('driver.license') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                            <a href="{{ route('driver-license.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
                                 Driver License
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                       
                 </div>
