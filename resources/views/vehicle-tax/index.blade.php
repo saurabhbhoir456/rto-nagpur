@@ -13,6 +13,10 @@
         </div>
         <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Upload</button>
     </form>
+    <!-- Add records Button -->
+    <div class="flex justify-end mb-4">
+        <a href="{{ route('vehicle-tax.create') }}" class="px-4 py-2 bg-green-500 text-white rounded">Add Vehicle Tax Record</a>
+    </div>
 
     <!-- Display Vehicle Tax Data in a Table -->
     <h2 class="text-xl font-bold mb-4">Vehicle Tax Records</h2>

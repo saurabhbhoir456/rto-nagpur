@@ -20,6 +20,24 @@ class VehicleTaxController extends Controller
         return view('vehicle-tax.index', compact('vehicleTaxes'));
         // return view('sidebar-pages.vehicle-tax');
     }
+    // Add a new record
+    public function create()
+{
+    return view('vehicle-tax.create');
+}
+    public function store(Request $request)
+    {
+        $request->validate([
+            'owner_name' => 'required|string|max:255',
+            'mobile_number' => 'required|regex:/^[6-9][0-9]{9}$/',
+            'due_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        VehicleTax::create($request->only('owner_name', 'mobile_number', 'due_date'));
+
+        return redirect()->route('vehicle-tax.index')->with('success', 'Record added successfully!');
+    }
+
     public function edit($id)
     {
         $tax = VehicleTax::findOrFail($id);
