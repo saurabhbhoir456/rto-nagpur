@@ -4,6 +4,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SidebarController;
 use App\Http\Controllers\VehicleTaxController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+});
+
 
 Route::get('/', function () {
     return view('welcome');
