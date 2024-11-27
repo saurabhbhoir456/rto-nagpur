@@ -30,6 +30,7 @@
                     <tr>
                         <th class="text-left py-2 px-4 border-b">Owner Name</th>
                         <th class="text-left py-2 px-4 border-b">Mobile Number</th>
+                        <th class="text-left py-2 px-4 border-b">Vehicle Number</th>
                         <th class="text-left py-2 px-4 border-b">Due Date</th>
                     </tr>
                 </thead>
@@ -38,6 +39,7 @@
                         <tr>
                             <td class="py-2 px-4 border-b">{{ $tax->owner_name }}</td>
                             <td class="py-2 px-4 border-b">{{ $tax->mobile_number }}</td>
+                            <td class="py-2 px-4 border-b">{{ $tax->vehicle_number }}</td>
                             <td class="py-2 px-4 border-b">{{ $tax->due_date }}</td>
                             <td class="py-2 px-4 border-b">
                                 <!-- Edit Button -->

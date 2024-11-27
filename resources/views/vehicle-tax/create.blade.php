@@ -16,6 +16,10 @@
             <input type="text" name="mobile_number" required class="mt-1 block w-full border-gray-300 rounded-md">
         </div>
         <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Vehicle Number</label>
+            <input type="text" name="vehicle_number" required class="mt-1 block w-full border-gray-300 rounded-md">
+        </div>
+        <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Due Date</label>
             <input type="date" name="due_date" required class="mt-1 block w-full border-gray-300 rounded-md">
         </div>

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class VehicleTax extends Model
 {
     use HasFactory;
-    protected $fillable = ['owner_name', 'mobile_number', 'due_date'];
+    protected $fillable = ['owner_name', 'mobile_number', 'vehicle_number', 'due_date'];
 }

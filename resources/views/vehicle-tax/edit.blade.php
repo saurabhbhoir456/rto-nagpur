@@ -16,6 +16,10 @@
             <input type="text" name="mobile_number" value="{{ old('mobile_number', $tax->mobile_number) }}" required class="mt-1 block w-full">
         </div>
         <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Vehicle Number</label>
+            <input type="text" name="vehicle_number" value="{{ old('vehicle_number', $tax->vehicle_number) }}" required class="mt-1 block w-full">
+        </div>
+        <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Due Date</label>
             <input type="date" name="due_date" value="{{ old('due_date', $tax->due_date) }}" required class="mt-1 block w-full">
         </div>
