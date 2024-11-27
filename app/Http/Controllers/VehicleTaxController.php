@@ -117,4 +117,21 @@ class VehicleTaxController extends Controller
 
         return redirect()->route('vehicle-tax.index')->with('success', 'CSV uploaded successfully!');
     }
+    public function filterVehicleTaxes(Request $request)
+    {
+        $duration = $request->input('duration');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $vehicleTaxes = VehicleTax::where('due_date', '>=', $startDate)
+            ->where('due_date', '<=', $endDate);
+
+        if ($duration) {
+            $vehicleTaxes = $vehicleTaxes->whereDate('due_date', '>=', now()->subDays($duration));
+        }
+
+        $vehicleTaxes = $vehicleTaxes->get();
+
+        return view('vehicle-tax.index', compact('vehicleTaxes'));
+    }
 }

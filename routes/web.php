@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/vehicle-tax', [VehicleTaxController::class, 'index'])->name('vehicle-tax.index');
+    Route::get('/vehicle-tax/filter', [VehicleTaxController::class, 'filterVehicleTaxes'])->name('vehicle-tax.filter');
+
     Route::post('/vehicle-tax/upload', [VehicleTaxController::class, 'upload'])->name('vehicle-tax.upload');
     Route::get('/vehicle-tax/create', [VehicleTaxController::class, 'create'])->name('vehicle-tax.create');
     Route::post('/vehicle-tax', [VehicleTaxController::class, 'store'])->name('vehicle-tax.store');

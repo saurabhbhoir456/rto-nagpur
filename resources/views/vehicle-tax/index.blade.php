@@ -17,7 +17,21 @@
     <div class="flex justify-end mb-4">
         <a href="{{ route('vehicle-tax.create') }}" class="px-4 py-2 bg-green-500 text-white rounded">Add Vehicle Tax Record</a>
     </div>
-
+    {{-- Filter Duration and date --}}
+    <div class="flex justify-end mb-4">
+        <form action="{{ route('vehicle-tax.filter') }}" method="GET" class="flex items-center space-x-4">
+            @csrf
+            <div class="mr-4">
+                <label for="start_date" class="block text-gray-700 text-sm font-bold mb-2">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" class="block w-full p-2 pl-10 text-sm text-gray-700 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div class="mr-4">
+                <label for="end_date" class="block text-gray-700 text-sm font-bold mb-2">End Date:</label>
+                <input type="date" name="end_date" id="end_date" class="block w-full p-2 pl-10 text-sm text-gray-700 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Filter</button>
+        </form>
+    </div>
     <!-- Display Vehicle Tax Data in a Table -->
     <h2 class="text-xl font-bold mb-4">Vehicle Tax Records</h2>
 
