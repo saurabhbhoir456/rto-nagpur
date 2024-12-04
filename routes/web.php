@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SidebarController;
 use App\Http\Controllers\VehicleTaxController;
+use App\Http\Controllers\VehicleFitnessController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 
@@ -38,9 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/vehicle-tax/{id}/edit', [VehicleTaxController::class, 'edit'])->name('vehicle-tax.edit');
     Route::put('/vehicle-tax/{id}', [VehicleTaxController::class, 'update'])->name('vehicle-tax.update');
     Route::delete('/vehicle-tax/{id}', [VehicleTaxController::class, 'destroy'])->name('vehicle-tax.destroy');
-    // Route::get('/vehicle-tax', [SidebarController::class, 'vehicleTax'])->name('vehicle.tax');
-    // Route::get('/vehicle-permit', [SidebarController::class, 'vehiclePermit'])->name('vehicle.permit');
-    // Route::get('/fitness-certificate', [SidebarController::class, 'fitnessCertificate'])->name('fitness.certificate');
-    // Route::get('/driver-license', [SidebarController::class, 'driverLicense'])->name('driver.license');
+    Route::resource('vehicle-fitness', VehicleFitnessController::class);
+    Route::post('/vehicle-fitness/import', [VehicleFitnessController::class, 'import'])->name('vehicle-fitness.import');
 });
 require __DIR__.'/auth.php';

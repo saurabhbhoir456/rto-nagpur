@@ -30,13 +30,13 @@
                             <a href="{{ route('vehicle-permit.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
                                 Vehicle Permit
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
-                            <a href="{{ route('fitness-certificate.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
-                                Fitness Certificate
+                            <a href="{{ route('vehicle-fitness.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                Vehicle Fitness 
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{ route('driver-license.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
                                 Driver License
                             </a>
