@@ -26,21 +26,31 @@
                                 Vehicle Tax
                             </a>
                         </li>
-                        {{-- <li>
+                        <li>
                             <a href="{{ route('vehicle-permit.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
                                 Vehicle Permit
                             </a>
-                        </li> --}}
+                        </li>
+                        <li>
+                            <a href="{{ route('environment-tax.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                Environment Tax
+                            </a>
+                        </li>
                         <li>
                             <a href="{{ route('vehicle-fitness.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
                                 Vehicle Fitness 
                             </a>
                         </li>
-                        {{-- <li>
-                            <a href="{{ route('driver-license.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
-                                Driver License
+                        <li>
+                            <a href="{{ route('echallan.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                E-challan
                             </a>
-                        </li> --}}
+                        </li>
+                        <li>
+                            <a href="{{ route('driver-license.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                Driving License
+                            </a>
+                        </li>
                     </ul>
                       
                 </div>

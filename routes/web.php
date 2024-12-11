@@ -4,6 +4,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SidebarController;
 use App\Http\Controllers\VehicleTaxController;
 use App\Http\Controllers\VehicleFitnessController;
+use App\Http\Controllers\EchallanController;
+use App\Http\Controllers\VehiclePermitController;
+use App\Http\Controllers\EnvironmentTaxController;
+use App\Http\Controllers\DrivingLicenseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 
@@ -41,5 +45,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/vehicle-tax/{id}', [VehicleTaxController::class, 'destroy'])->name('vehicle-tax.destroy');
     Route::resource('vehicle-fitness', VehicleFitnessController::class);
     Route::post('/vehicle-fitness/import', [VehicleFitnessController::class, 'import'])->name('vehicle-fitness.import');
+    Route::get('/echallan', [EchallanController::class, 'index'])->name('echallan.index');
+    Route::resource('vehicle-permit', VehiclePermitController::class);
+    Route::resource('environment-tax', EnvironmentTaxController::class);
+    Route::resource('driver-license', DrivingLicenseController::class);
 });
 require __DIR__.'/auth.php';
