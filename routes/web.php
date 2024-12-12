@@ -47,7 +47,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vehicle-fitness/import', [VehicleFitnessController::class, 'import'])->name('vehicle-fitness.import');
     Route::get('/echallan', [EchallanController::class, 'index'])->name('echallan.index');
     Route::get('/echallans', [EchallanController::class, 'index']);
-
+    Route::post('/echallans/upload', [EchallanController::class, 'uploadCsv'])->name('echallans.upload');   
+    Route::delete('/echallans', [EchallanController::class, 'deleteEchallans'])->name('echallans.delete');
     Route::resource('vehicle-permit', VehiclePermitController::class);
     Route::resource('environment-tax', EnvironmentTaxController::class);
     Route::resource('driver-license', DrivingLicenseController::class);
