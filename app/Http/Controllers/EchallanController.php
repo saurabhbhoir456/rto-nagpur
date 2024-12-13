@@ -100,7 +100,7 @@ class EchallanController extends Controller
             }
         }
     
-        return response()->json(['message' => 'SMS sent successfully']);
+        return redirect()->route('echallan.index')->with('success', 'SMS sent successfully');
     }
     public function logs()
     {
