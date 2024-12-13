@@ -39,9 +39,20 @@
         <p>No records found.</p>
     @else
         <div class="overflow-x-auto">
+            <form action="{{ route('vehicle-tax.delete-multiple') }}" method="POST" class="inline-block">
+                @csrf
+                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">Delete Selected</button>
+            </form>
+            <form action="{{ route('vehicle-tax.send-sms') }}" method="POST" class="inline-block">
+                @csrf
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Send SMS to Selected</button>
+            </form>
             <table class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
+                        <th class="text-left py-2 px-4 border-b">
+                            <input type="checkbox" id="select-all" />
+                        </th>
                         <th class="text-left py-2 px-4 border-b">Mobile Number</th>
                         <th class="text-left py-2 px-4 border-b">Vehicle Number</th>
                         <th class="text-left py-2 px-4 border-b">Due Date</th>
@@ -50,6 +61,9 @@
                 <tbody>
                     @foreach($vehicleTaxes as $tax)
                         <tr>
+                            <td class="py-2 px-4 border-b">
+                                <input type="checkbox" name="vehicle_tax_ids[]" value="{{ $tax->id }}" />
+                            </td>
                             <td class="py-2 px-4 border-b">{{ $tax->mobile_number }}</td>
                             <td class="py-2 px-4 border-b">{{ $tax->vehicle_number }}</td>
                             <td class="py-2 px-4 border-b">{{ $tax->due_date }}</td>

@@ -4,13 +4,81 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VehicleTax;
+use App\Models\VehicleTaxSmsLog;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class VehicleTaxController extends Controller
 {
     //
+    public function deleteMultiple(Request $request)
+    {
+    $vehicleTaxIds = json_decode($request->input('vehicle_tax_ids'), true);
+    VehicleTax::whereIn('id', $vehicleTaxIds)->delete();
+    return response()->json(['success' => 'Vehicle taxes deleted successfully']);
+    }
+    public function sendSms(Request $request)
+    {
+    $vehicleTaxIds = json_decode($request->input('vehicle_tax_ids'), true);
+    $vehicleTaxes = VehicleTax::whereIn('id', $vehicleTaxIds)->get();
+
+        foreach ($vehicleTaxes as $vehicleTax) {
+            $mobileNumber = $vehicleTax->mobile_number;
+            $vehicleNumber = $vehicleTax->vehicle_number;
+
+            $smsMessage = "Kind attention, vehicle tax is pending against your vehicle no. $vehicleNumber. Pay vehicle tax in 7 days to avoid blacklisting. Ignore if paid. - Dy RTO Wardha.";
+
+            $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
+            $apiKey = env('SMSGATEWAYHUB_API_KEY');
+            $senderId = env('SMSGATEWAYHUB_SENDER_ID');
+            $entityID = env('SMSGATEWAYHUB_ENTITY_ID');
+            $dlttemplateid = env('SMSGATEWAYHUB_DLTEMPLATE_ID_TAX');
+
+            $postData = array(
+                "APIKey" => $apiKey,
+                "senderid" => $senderId,
+                "EntityId" => $entityID,
+                "dlttemplateid" => $dlttemplateid,
+                "channel" => "2",
+                "DCS" => "0",
+                "flashsms" => "0",
+                "number" => '91' . $mobileNumber,
+                "text" => $smsMessage,
+                "route" => "1"
+            );
+
+            try {
+                $response = Http::get($apiUrl, $postData);
+
+                $responseData = json_decode($response->body(), true);
+                Log::info('SMS Response Data:', $response->json());
+                $messageId = $responseData['MessageData'][0]['MessageId'];
+                $jobId = $responseData['JobId'];
+
+                // Save log to vehicle tax sms log table
+                $vehicleTaxSmsLog = new VehicleTaxSmsLog();
+                $vehicleTaxSmsLog->vehicle_tax_id = $vehicleTax->id;
+                $vehicleTaxSmsLog->mobile_number = $mobileNumber;
+                $vehicleTaxSmsLog->sms_message = $smsMessage;
+                $vehicleTaxSmsLog->message_id = $messageId;
+                $vehicleTaxSmsLog->job_id = $jobId;
+                $vehicleTaxSmsLog->save();
+            } catch (\Exception $e) {
+                // Log error message and request data
+                $vehicleTaxSmsLog = new VehicleTaxSmsLog();
+                $vehicleTaxSmsLog->vehicle_tax_id = $vehicleTax->id;
+                $vehicleTaxSmsLog->mobile_number = $mobileNumber;
+                $vehicleTaxSmsLog->sms_message = $smsMessage;
+                $vehicleTaxSmsLog->error_message = $e->getMessage();
+                $vehicleTaxSmsLog->request_data = json_encode($postData);
+                $vehicleTaxSmsLog->save();
+            }
+        }
+    return redirect()->route('vehicle-tax.index')->with('success', 'SMS sent successfully');
+    }
     public function index()
     {
         $vehicleTaxes = VehicleTax::all();

@@ -57,7 +57,7 @@ class EchallanController extends Controller
             $apiKey = env('SMSGATEWAYHUB_API_KEY');
             $senderId = env('SMSGATEWAYHUB_SENDER_ID');
             $entityID = env('SMSGATEWAYHUB_ENTITY_ID');
-            $dlttemplateid = env('SMSGATEWAYHUB_DLTEMPLATE_ID');
+            $dlttemplateid = env('SMSGATEWAYHUB_DLTEMPLATE_ID_ECHALLAN');
     
             $postData = array(
                 "APIKey" => $apiKey,
