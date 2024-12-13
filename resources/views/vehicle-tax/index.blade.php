@@ -42,7 +42,6 @@
             <table class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="text-left py-2 px-4 border-b">Owner Name</th>
                         <th class="text-left py-2 px-4 border-b">Mobile Number</th>
                         <th class="text-left py-2 px-4 border-b">Vehicle Number</th>
                         <th class="text-left py-2 px-4 border-b">Due Date</th>
@@ -51,7 +50,6 @@
                 <tbody>
                     @foreach($vehicleTaxes as $tax)
                         <tr>
-                            <td class="py-2 px-4 border-b">{{ $tax->owner_name }}</td>
                             <td class="py-2 px-4 border-b">{{ $tax->mobile_number }}</td>
                             <td class="py-2 px-4 border-b">{{ $tax->vehicle_number }}</td>
                             <td class="py-2 px-4 border-b">{{ $tax->due_date }}</td>

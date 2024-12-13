@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vehicle_taxes', function (Blueprint $table) {
-            $table->id();
-            $table->string('mobile_number');
-            $table->date('due_date');
-            $table->timestamps();
+        Schema::table('vehicle_taxes', function (Blueprint $table) {
+            $table->dropColumn('owner_name');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vehicle_taxes');
+        Schema::table('vehicle_taxes', function (Blueprint $table) {
+            $table->string('owner_name');
+        });
     }
 };

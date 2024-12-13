@@ -8,10 +8,6 @@
     <form action="{{ route('vehicle-tax.store') }}" method="POST">
         @csrf
         <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700">Owner Name</label>
-            <input type="text" name="owner_name" required class="mt-1 block w-full border-gray-300 rounded-md">
-        </div>
-        <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
             <input type="text" name="mobile_number" required class="mt-1 block w-full border-gray-300 rounded-md">
         </div>

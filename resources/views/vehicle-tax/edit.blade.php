@@ -8,10 +8,6 @@
         @csrf
         @method('PUT')
         <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700">Owner Name</label>
-            <input type="text" name="owner_name" value="{{ old('owner_name', $tax->owner_name) }}" required class="mt-1 block w-full">
-        </div>
-        <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
             <input type="text" name="mobile_number" value="{{ old('mobile_number', $tax->mobile_number) }}" required class="mt-1 block w-full">
         </div>

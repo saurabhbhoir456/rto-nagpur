@@ -28,13 +28,12 @@ class VehicleTaxController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'owner_name' => 'required|string|max:255',
             'mobile_number' => 'required|regex:/^[6-9][0-9]{9}$/',
             'vehicle_number' => 'required|string|max:255',
             'due_date' => 'required|date_format:Y-m-d',
         ]);
 
-        VehicleTax::create($request->only('owner_name', 'mobile_number', 'vehicle_number', 'due_date'));
+        VehicleTax::create($request->only('mobile_number', 'vehicle_number', 'due_date'));
 
         return redirect()->route('vehicle-tax.index')->with('success', 'Record added successfully!');
     }
@@ -47,14 +46,13 @@ class VehicleTaxController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'owner_name' => 'required|string|max:255',
             'mobile_number' => 'required|regex:/^[6-9][0-9]{9}$/',
             'vehicle_number' => 'required|string|max:255',
             'due_date' => 'required|date_format:Y-m-d',
         ]);
 
         $tax = VehicleTax::findOrFail($id);
-        $tax->update($request->only('owner_name', 'mobile_number', 'vehicle_number', 'due_date'));
+        $tax->update($request->only('mobile_number', 'vehicle_number', 'due_date'));
 
         return redirect()->route('vehicle-tax.index')->with('success', 'Record updated successfully!');
     }
@@ -87,12 +85,10 @@ class VehicleTaxController extends Controller
 
             // Validate each row
             $validator = Validator::make([
-                'owner_name' => $row[0],
-                'mobile_number' => $row[1],
-                'vehicle_number' => $row[2],
-                'due_date' => $row[3],
+                'mobile_number' => $row[0],
+                'vehicle_number' => $row[1],
+                'due_date' => $row[2],
             ], [
-                'owner_name' => 'required|string|max:255',
                 'mobile_number' => 'required|regex:/^[6-9][0-9]{9}$/',
                 'vehicle_number' => 'required|string|max:255',
                 'due_date' => 'required|date_format:Y-m-d',
@@ -105,10 +101,9 @@ class VehicleTaxController extends Controller
 
             // Insert the data into the database
             VehicleTax::create([
-                'owner_name' => $row[0],
-                'mobile_number' => $row[1],
-                'vehicle_number' => $row[2],
-                'due_date' => Carbon::parse($row[3]),
+                'mobile_number' => $row[0],
+                'vehicle_number' => $row[1],
+                'due_date' => Carbon::parse($row[2]),
             ]);
         }
 
