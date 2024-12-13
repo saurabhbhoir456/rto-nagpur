@@ -56,20 +56,24 @@ class EchallanController extends Controller
             $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
             $apiKey = env('SMSGATEWAYHUB_API_KEY');
             $senderId = env('SMSGATEWAYHUB_SENDER_ID');
+            $entityID = env('SMSGATEWAYHUB_ENTITY_ID');
+            $dlttemplateid = env('SMSGATEWAYHUB_DLTEMPLATE_ID');
     
             $postData = array(
                 "APIKey" => $apiKey,
                 "senderid" => $senderId,
+                "EntityId" => $entityID,
+                "dlttemplateid" => $dlttemplateid,
                 "channel" => "2",
                 "DCS" => "0",
                 "flashsms" => "0",
-                "number" => $mobileNumber,
+                "number" => '91' . $mobileNumber,
                 "text" => $smsMessage,
                 "route" => "1"
             );
     
             try {
-                $response = Http::post($apiUrl, $postData);
+                $response = Http::get($apiUrl, $postData);
     
                 $responseData = json_decode($response->body(), true);
                 Log::info('SMS Response Data:', $response->json());
