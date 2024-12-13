@@ -9,7 +9,8 @@
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Upload CSV</button>
     </form>
     <div class="flex justify-end mb-4">
-        <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete Selected</button>
+        <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-4">Delete Selected</button>
+        <button id="sendSmsButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Send SMS to Selected</button>
     </div>
     <table class="table-auto w-full">
         <thead class="bg-gray-100">
@@ -32,13 +33,38 @@
         </tbody>
     </table>
 
-    <script>
-        $(document).ready(function() {
-            $('#selectAll').on('click', function() {
-                $('input[name="echallans[]"]').prop('checked', this.checked);
-            });
+        <script>
+            $(document).ready(function() {
+                $('#selectAll').on('click', function() {
+                    $('input[name="echallans[]"]').prop('checked', this.checked);
+                });
 
-            $('#deleteButton').on('click', function() {
+                $('#deleteButton').on('click', function() {
+                    var selectedEchallans = [];
+                    $('input[name="echallans[]"]:checked').each(function() {
+                        selectedEchallans.push($(this).val());
+                    });
+
+                    if (selectedEchallans.length > 0) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '{{ route('echallans.delete') }}',
+                            data: { 
+                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                echallans: selectedEchallans 
+                            },
+                            success: function(data) {
+                                console.log(data);
+                                // Update the table after the delete request is sent
+                                selectedEchallans.forEach(function(id) {
+                                    $('tr:has(input[value="' + id + '"])').remove();
+                                });
+                            }
+                        });
+                    }
+                });
+
+            $('#sendSmsButton').on('click', function() {
                 var selectedEchallans = [];
                 $('input[name="echallans[]"]:checked').each(function() {
                     selectedEchallans.push($(this).val());
@@ -46,18 +72,14 @@
 
                 if (selectedEchallans.length > 0) {
                     $.ajax({
-                        type: 'DELETE',
-                        url: '{{ route('echallans.delete') }}',
+                        type: 'POST',
+                        url: '{{ route('echallans.sendSms') }}',
                         data: { 
                             _token: $('meta[name="csrf-token"]').attr('content'),
-                            echallans: selectedEchallans 
+                            echallan_ids: selectedEchallans 
                         },
                         success: function(data) {
                             console.log(data);
-                            // Update the table after the delete request is sent
-                            selectedEchallans.forEach(function(id) {
-                                $('tr:has(input[value="' + id + '"])').remove();
-                            });
                         }
                     });
                 }

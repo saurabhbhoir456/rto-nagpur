@@ -49,8 +49,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/echallans', [EchallanController::class, 'index']);
     Route::post('/echallans/upload', [EchallanController::class, 'uploadCsv'])->name('echallans.upload');   
     Route::delete('/echallans', [EchallanController::class, 'deleteEchallans'])->name('echallans.delete');
+    Route::post('/echallans/sendSms', [EchallanController::class, 'sendSms'])->name('echallans.sendSms');
     Route::resource('vehicle-permit', VehiclePermitController::class);
     Route::resource('environment-tax', EnvironmentTaxController::class);
     Route::resource('driver-license', DrivingLicenseController::class);
+    Route::get('/echallan-logs', [EchallanController::class, 'logs'])->name('echallan-logs.index');
 });
 require __DIR__.'/auth.php';
