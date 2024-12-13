@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Echallan;
 use App\Models\EchallanSmsLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class EchallanController extends Controller
 {
@@ -36,13 +38,13 @@ class EchallanController extends Controller
     }
     public function deleteEchallans(Request $request)
     {
-        $echallanIds = $request->input('echallans');
+        $echallanIds = json_decode($request->input('echallans'), true);
         Echallan::whereIn('id', $echallanIds)->delete();
         return response()->json(['success' => 'Echallans deleted successfully']);
     }
     public function sendSms(Request $request)
     {
-        $echallanIds = $request->input('echallan_ids');
+        $echallanIds = json_decode($request->input('echallan_ids'), true);
         $echallans = Echallan::whereIn('id', $echallanIds)->get();
     
         foreach ($echallans as $echallan) {
@@ -53,7 +55,7 @@ class EchallanController extends Controller
     
             $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
             $apiKey = env('SMSGATEWAYHUB_API_KEY');
-            $senderId = env('SMSGATEWAYHUB__SENDER_ID');
+            $senderId = env('SMSGATEWAYHUB_SENDER_ID');
     
             $postData = array(
                 "APIKey" => $apiKey,
@@ -66,25 +68,32 @@ class EchallanController extends Controller
                 "route" => "1"
             );
     
-            $ch = curl_init($apiUrl);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-            $response = curl_exec($ch);
-            curl_close($ch);
+            try {
+                $response = Http::post($apiUrl, $postData);
     
-            $responseData = json_decode($response, true);
-            $messageId = $responseData['MessageData'][0]['MessageId'];
-            $jobId = $responseData['JobId'];
+                $responseData = json_decode($response->body(), true);
+                Log::info('SMS Response Data:', $response->json());
+                $messageId = $responseData['MessageData'][0]['MessageId'];
+                $jobId = $responseData['JobId'];
     
-            // Save log to ehallansmslog table
-            $echallanSmsLog = new EchallanSmsLog();
-            $echallanSmsLog->echallan_id = $echallan->id;
-            $echallanSmsLog->mobile_number = $mobileNumber;
-            $echallanSmsLog->sms_message = $smsMessage;
-            $echallanSmsLog->message_id = $messageId;
-            $echallanSmsLog->job_id = $jobId;
-            $echallanSmsLog->save();
+                // Save log to ehallansmslog table
+                $echallanSmsLog = new EchallanSmsLog();
+                $echallanSmsLog->echallan_id = $echallan->id;
+                $echallanSmsLog->mobile_number = $mobileNumber;
+                $echallanSmsLog->sms_message = $smsMessage;
+                $echallanSmsLog->message_id = $messageId;
+                $echallanSmsLog->job_id = $jobId;
+                $echallanSmsLog->save();
+            } catch (\Exception $e) {
+                // Log error message and request data
+                $echallanSmsLog = new EchallanSmsLog();
+                $echallanSmsLog->echallan_id = $echallan->id;
+                $echallanSmsLog->mobile_number = $mobileNumber;
+                $echallanSmsLog->sms_message = $smsMessage;
+                $echallanSmsLog->error_message = $e->getMessage();
+                $echallanSmsLog->request_data = json_encode($postData);
+                $echallanSmsLog->save();
+            }
         }
     
         return response()->json(['message' => 'SMS sent successfully']);
