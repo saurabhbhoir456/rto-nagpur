@@ -55,6 +55,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/echallans/sendSms', [EchallanController::class, 'sendSms'])->name('echallans.sendSms');
     Route::resource('vehicle-permit', VehiclePermitController::class);
     Route::resource('environment-tax', EnvironmentTaxController::class);
+    Route::post('/environment-tax/upload', [EnvironmentTaxController::class, 'uploadCsv'])->name('environment-tax.upload');
+    Route::delete('/environment-tax', [EnvironmentTaxController::class, 'deleteEnvironmentTaxes'])->name('environment-tax.delete');
+    Route::post('/environment-tax/sendSms', [EnvironmentTaxController::class, 'sendSms'])->name('environment-tax.sendSms');
+    Route::get('/environment-tax-logs', [EnvironmentTaxController::class, 'logs'])->name('environment-tax-logs.index');
     Route::resource('driver-license', DrivingLicenseController::class);
     Route::get('/echallan-logs', [EchallanController::class, 'logs'])->name('echallan-logs.index');
 });
