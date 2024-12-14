@@ -38,50 +38,70 @@
     @if($vehicleTaxes->isEmpty())
         <p>No records found.</p>
     @else
-        <div class="overflow-x-auto">
-            <form action="{{ route('vehicle-tax.delete-multiple') }}" method="POST" class="inline-block">
+       
+            <form action="{{ route('vehicle-tax.destroyMultiple') }}" method="POST" id="delete-selected-form">
                 @csrf
+                <table class="min-w-full bg-white border border-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left py-2 px-4 border-b"><input type="checkbox" id="selectAll" /></th>
+                            <th class="text-left py-2 px-4 border-b">Mobile Number</th>
+                            <th class="text-left py-2 px-4 border-b">Vehicle Number</th>
+                            <th class="text-left py-2 px-4 border-b">Due Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($vehicleTaxes as $tax)
+                            <tr>
+                                <td class="py-2 px-4 border-b"><input type="checkbox" name="vehicle_tax_ids[]" value="{{ $tax->id }}" /></td>
+                                <td class="py-2 px-4 border-b">{{ $tax->mobile_number }}</td>
+                                <td class="py-2 px-4 border-b">{{ $tax->vehicle_number }}</td>
+                                <td class="py-2 px-4 border-b">{{ $tax->due_date }}</td>
+                                <td class="py-2 px-4 border-b">
+                                    <!-- Edit Button -->
+                                    <a href="{{ route('vehicle-tax.edit', $tax->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
+                                    <!-- Delete Button -->
+                                    <form action="{{ route('vehicle-tax.destroy', $tax->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700 ml-4">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">Delete Selected</button>
             </form>
-            <form action="{{ route('vehicle-tax.send-sms') }}" method="POST" class="inline-block">
-                @csrf
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Send SMS to Selected</button>
-            </form>
-            <table class="min-w-full bg-white border border-gray-200">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="text-left py-2 px-4 border-b">
-                            <input type="checkbox" id="select-all" />
-                        </th>
-                        <th class="text-left py-2 px-4 border-b">Mobile Number</th>
-                        <th class="text-left py-2 px-4 border-b">Vehicle Number</th>
-                        <th class="text-left py-2 px-4 border-b">Due Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($vehicleTaxes as $tax)
-                        <tr>
-                            <td class="py-2 px-4 border-b">
-                                <input type="checkbox" name="vehicle_tax_ids[]" value="{{ $tax->id }}" />
-                            </td>
-                            <td class="py-2 px-4 border-b">{{ $tax->mobile_number }}</td>
-                            <td class="py-2 px-4 border-b">{{ $tax->vehicle_number }}</td>
-                            <td class="py-2 px-4 border-b">{{ $tax->due_date }}</td>
-                            <td class="py-2 px-4 border-b">
-                                <!-- Edit Button -->
-                                <a href="{{ route('vehicle-tax.edit', $tax->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
-                                <!-- Delete Button -->
-                                <form action="{{ route('vehicle-tax.destroy', $tax->id) }}" method="POST" class="inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-700 ml-4">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+            <script>
+                $(document).ready(function() {
+                    $('#selectAll').on('click', function() {
+                        $('input[name="vehicle_tax_ids[]"]').prop('checked', $(this).prop('checked'));
+                    });
+        
+                    $('#delete-selected-form').on('submit', function(event) {
+                        event.preventDefault();
+                        var vehicleTaxIds = [];
+                        $('input[name="vehicle_tax_ids[]"]:checked').each(function() {
+                            vehicleTaxIds.push($(this).val());
+                        });
+        
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ route('vehicle-tax.destroyMultiple') }}',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                vehicle_tax_ids: vehicleTaxIds
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                location.reload();
+                            }
+                        });
+                    });
+                });
+            </script>
     @endif
 </div>
+
 @endsection

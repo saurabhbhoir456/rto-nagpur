@@ -14,15 +14,19 @@ use Carbon\Carbon;
 class VehicleTaxController extends Controller
 {
     //
-    public function deleteMultiple(Request $request)
-    {
-    $vehicleTaxIds = json_decode($request->input('vehicle_tax_ids'), true);
-    VehicleTax::whereIn('id', $vehicleTaxIds)->delete();
-    return response()->json(['success' => 'Vehicle taxes deleted successfully']);
-    }
-    public function sendSms(Request $request)
-    {
-    $vehicleTaxIds = json_decode($request->input('vehicle_tax_ids'), true);
+    public function destroyMultiple(Request $request)
+{
+    $ids = $request->input('vehicle_tax_ids');
+    VehicleTax::whereIn('id', $ids)->delete();
+    return redirect()->route('vehicle-tax.index')->with('success', 'Records deleted successfully');
+}
+
+// ...
+
+
+public function sendSms(Request $request)
+{
+    $vehicleTaxIds = $request->input('vehicle_tax_ids');
     $vehicleTaxes = VehicleTax::whereIn('id', $vehicleTaxIds)->get();
 
         foreach ($vehicleTaxes as $vehicleTax) {
