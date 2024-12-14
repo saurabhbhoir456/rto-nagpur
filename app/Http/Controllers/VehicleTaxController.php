@@ -33,7 +33,7 @@ public function sendSms(Request $request)
             $mobileNumber = $vehicleTax->mobile_number;
             $vehicleNumber = $vehicleTax->vehicle_number;
 
-            $smsMessage = "Kind attention, vehicle tax is pending against your vehicle no. $vehicleNumber. Pay vehicle tax in 7 days to avoid blacklisting. Ignore if paid. - Dy RTO Wardha.";
+            $smsMessage = "RTO tax is due for vehicle no. $vehicleNumber. Kindly pay the tax urgently within 7 days to avoid further action. Ignore if paid. - Dy RTO Wardha.";
 
             $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
             $apiKey = env('SMSGATEWAYHUB_API_KEY');
@@ -102,7 +102,7 @@ public function sendSms(Request $request)
         $request->validate([
             'mobile_number' => 'required|regex:/^[6-9][0-9]{9}$/',
             'vehicle_number' => 'required|string|max:255',
-            'due_date' => 'required|date_format:Y-m-d',
+            'due_date' => 'required|date_format:d-m-Y',
         ]);
 
         VehicleTax::create($request->only('mobile_number', 'vehicle_number', 'due_date'));
@@ -120,7 +120,7 @@ public function sendSms(Request $request)
         $request->validate([
             'mobile_number' => 'required|regex:/^[6-9][0-9]{9}$/',
             'vehicle_number' => 'required|string|max:255',
-            'due_date' => 'required|date_format:Y-m-d',
+            'due_date' => 'required|date_format:d-m-Y',
         ]);
 
         $tax = VehicleTax::findOrFail($id);
@@ -163,7 +163,7 @@ public function sendSms(Request $request)
             ], [
                 'mobile_number' => 'required|regex:/^[6-9][0-9]{9}$/',
                 'vehicle_number' => 'required|string|max:255',
-                'due_date' => 'required|date_format:Y-m-d',
+                'due_date' => 'required|date_format:d-m-Y',
             ]);
 
             if ($validator->fails()) {
@@ -175,7 +175,7 @@ public function sendSms(Request $request)
             VehicleTax::create([
                 'mobile_number' => $row[0],
                 'vehicle_number' => $row[1],
-                'due_date' => Carbon::parse($row[2]),
+                'due_date' => Carbon::createFromFormat('d-m-Y', $row[2]),
             ]);
         }
 

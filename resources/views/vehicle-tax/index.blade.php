@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-6">
-    <h1 class="text-2xl font-bold mb-4">Upload Vehicle Tax CSV</h1>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <h1 class="text-3xl font-bold mb-4">Vehicle Taxes</h1>
 
     <!-- Form for uploading CSV -->
     <form action="{{ route('vehicle-tax.upload') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-4">
@@ -72,6 +72,7 @@
                     </tbody>
                 </table>
                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">Delete Selected</button>
+                <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded" id="send-sms-button">Send SMS to Selected</button>
             </form>
             <script>
                 $(document).ready(function() {
@@ -96,6 +97,26 @@
                             success: function(response) {
                                 console.log(response);
                                 location.reload();
+                            }
+                        });
+                    });
+                    
+                    $('#send-sms-button').on('click', function() {
+                        var vehicleTaxIds = [];
+                        $('input[name="vehicle_tax_ids[]"]:checked').each(function() {
+                            vehicleTaxIds.push($(this).val());
+                        });
+        
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ route('vehicle-tax.sendSms') }}',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                vehicle_tax_ids: vehicleTaxIds
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                alert('SMS sent successfully!');
                             }
                         });
                     });

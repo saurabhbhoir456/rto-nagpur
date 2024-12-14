@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/vehicle-tax/{id}', [VehicleTaxController::class, 'update'])->name('vehicle-tax.update');
     Route::delete('/vehicle-tax/{id}', [VehicleTaxController::class, 'destroy'])->name('vehicle-tax.destroy');
     Route::post('/vehicle-tax/delete-selected', [VehicleTaxController::class, 'destroyMultiple'])->name('vehicle-tax.destroyMultiple');
-    Route::post('/vehicle-tax/send-sms', [VehicleTaxController::class, 'sendSms'])->name('vehicle-tax.send-sms');
+    Route::post('/vehicle-tax/send-sms', [VehicleTaxController::class, 'sendSms'])->name('vehicle-tax.sendSms');
     Route::resource('vehicle-fitness', VehicleFitnessController::class);
     Route::post('/vehicle-fitness/import', [VehicleFitnessController::class, 'import'])->name('vehicle-fitness.import');
     Route::get('/echallan', [EchallanController::class, 'index'])->name('echallan.index');

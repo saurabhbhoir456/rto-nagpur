@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vehicletaxsmslog', function (Blueprint $table) {
+        Schema::create('vehicle_tax_sms_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vehicle_tax_id')->constrained()->onDelete('cascade');
             $table->string('mobile_number');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vehicletaxsmslog');
+        Schema::dropIfExists('vehicle_tax_sms_logs');
     }
 };
