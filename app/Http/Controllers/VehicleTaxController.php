@@ -14,6 +14,12 @@ use Carbon\Carbon;
 class VehicleTaxController extends Controller
 {
     //
+    
+public function logs()
+{
+    $vehicleTaxSmsLogs = VehicleTaxSmsLog::all();
+    return view('vehicle-tax-logs.index', compact('vehicleTaxSmsLogs'));
+}
     public function destroyMultiple(Request $request)
 {
     $ids = $request->input('vehicle_tax_ids');
