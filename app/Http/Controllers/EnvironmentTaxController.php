@@ -44,14 +44,14 @@ class EnvironmentTaxController extends Controller
     }
     public function sendSms(Request $request)
     {
-        $environmentTaxIds = json_decode($request->input('environmentTaxIds'), true);
+        $environmentTaxIds = json_decode($request->input('environment_tax_ids'), true);
         $environmentTaxes = EnvironmentTax::whereIn('id', $environmentTaxIds)->get();
     
         foreach ($environmentTaxes as $environmentTax) {
             $vehicleNumber = $environmentTax->vehicle_number;
             $mobileNumber = $environmentTax->mobile_number;
     
-            $smsMessage = "Kind attention, environment tax is pending against your vehicle no. $vehicleNumber. Pay environment tax in 7 days to avoid blacklisting. Ignore if paid. - Dy RTO Wardha.";
+            $smsMessage = "RTO Environment tax is due for vehicle no. $vehicleNumber. Kindly pay the tax urgently within 7 days to avoid further action. Ignore if paid. - Dy RTO Wardha.";
     
             $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
             $apiKey = env('SMSGATEWAYHUB_API_KEY');
@@ -67,7 +67,7 @@ class EnvironmentTaxController extends Controller
                 "channel" => "2",
                 "DCS" => "0",
                 "flashsms" => "0",
-                "number" => '91' . $mobileNumber,
+                "number" => '91'.$mobileNumber,
                 "text" => $smsMessage,
                 "route" => "1"
             );
@@ -107,7 +107,7 @@ class EnvironmentTaxController extends Controller
     public function logs()
     {
         // Note: You may need to create an EnvironmentTaxSmsLog model and migration
-        // $environmentTaxSmsLogs = EnvironmentTaxSmsLog::all();
-        // return view('environment-tax-logs.index', compact('environmentTaxSmsLogs'));
+        $environmentTaxSmsLogs = EnvironmentTaxSmsLog::all();
+        return view('environment-tax-logs.index', compact('environmentTaxSmsLogs'));
     }
 }
