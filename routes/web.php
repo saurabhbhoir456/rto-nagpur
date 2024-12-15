@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vehicle-fitness/sendSms', [VehicleFitnessController::class, 'sendSms'])->name('vehicle-fitness.sendSms');
     Route::delete('/vehicle-fitness', [VehicleFitnessController::class, 'deleteVehicleFitnesses'])->name('vehicle-fitness.delete');
     Route::get('/vehicle-fitness', [VehicleFitnessController::class, 'index'])->name('vehicle-fitness.index');
+    Route::get('/vehicle-fitness-logs', [VehicleFitnessController::class, 'logs'])->name('vehicle-fitness.logs');
 
     Route::get('/echallan', action: [EchallanController::class, 'index'])->name('echallan.index');
     Route::get('/echallans', [EchallanController::class, 'index']);
