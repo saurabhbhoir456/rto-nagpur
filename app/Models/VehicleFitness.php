@@ -9,9 +9,8 @@ class VehicleFitness extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sr_no',
         'vehicle_number',
-        'fitness_expiry',
+        'expiry_date',
         'mobile_number',
     ];
 }
