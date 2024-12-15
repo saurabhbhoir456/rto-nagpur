@@ -61,7 +61,7 @@ class VehicleFitnessController extends Controller
                 $vehicleNumber = $vehicleFitness->vehicle_number;
                 $mobileNumber = $vehicleFitness->mobile_number;
     
-                $smsMessage = "Kind attention, vehicle fitness is pending against your vehicle no. $vehicleNumber. Pay vehicle fitness in 7 days to avoid blacklisting. Ignore if paid. - Dy RTO Wardha.";
+                $smsMessage = "Fitness Certificate of your vehicle no. $vehicleNumber expired. Renew the fitness of your vehicle urgently to avoid further action. Ignore if renewed. -Dy RTO Wardha.	";
     
                 $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
                 $apiKey = env('SMSGATEWAYHUB_API_KEY');
