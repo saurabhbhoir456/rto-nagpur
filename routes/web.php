@@ -46,9 +46,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vehicle-tax/delete-selected', [VehicleTaxController::class, 'destroyMultiple'])->name('vehicle-tax.destroyMultiple');
     Route::post('/vehicle-tax/send-sms', [VehicleTaxController::class, 'sendSms'])->name('vehicle-tax.sendSms');
     Route::get('/vehicle-tax-logs', [VehicleTaxController::class, 'logs'])->name('vehicle-tax.logs');
-    Route::resource('vehicle-fitness', VehicleFitnessController::class);
-    Route::post('/vehicle-fitness/import', [VehicleFitnessController::class, 'import'])->name('vehicle-fitness.import');
-    Route::get('/echallan', [EchallanController::class, 'index'])->name('echallan.index');
+    Route::post('/vehicle-fitness/upload', [VehicleFitnessController::class, 'uploadCsv'])->name('vehicle-fitness.upload');
+    Route::post('/vehicle-fitness/sendSms', [VehicleFitnessController::class, 'sendSms'])->name('vehicle-fitness.sendSms');
+    Route::delete('/vehicle-fitness', [VehicleFitnessController::class, 'deleteVehicleFitnesses'])->name('vehicle-fitness.delete');
+    Route::get('/vehicle-fitness', [VehicleFitnessController::class, 'index'])->name('vehicle-fitness.index');
+
+    Route::get('/echallan', action: [EchallanController::class, 'index'])->name('echallan.index');
     Route::get('/echallans', [EchallanController::class, 'index']);
     Route::post('/echallans/upload', [EchallanController::class, 'uploadCsv'])->name('echallans.upload');   
     Route::delete('/echallans', [EchallanController::class, 'deleteEchallans'])->name('echallans.delete');

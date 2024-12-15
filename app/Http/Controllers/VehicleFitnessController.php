@@ -47,7 +47,7 @@ class VehicleFitnessController extends Controller
     
         public function deleteVehicleFitnesses(Request $request)
         {
-            $vehicleFitnessIds = json_decode($request->input('vehicle_fitnesses'), true);
+            $vehicleFitnessIds = json_decode($request->input('vehicleFitnesses'), true);
             VehicleFitness::whereIn('id', $vehicleFitnessIds)->delete();
             return response()->json(['success' => 'Vehicle fitnesses deleted successfully']);
         }
