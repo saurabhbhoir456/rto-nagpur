@@ -66,7 +66,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/environment-tax', [EnvironmentTaxController::class, 'deleteEnvironmentTaxes'])->name('environment-tax.delete');
     Route::post('/environment-tax/sendSms', [EnvironmentTaxController::class, 'sendSms'])->name('environment-tax.sendSms');
     Route::get('/environment-tax-logs', [EnvironmentTaxController::class, 'logs'])->name('environment-tax-logs.index');
-    Route::resource('driver-license', DrivingLicenseController::class);
+    Route::get('/driving-licenses', [DrivingLicenseController::class, 'index'])->name('driving-licenses.index');
+    Route::post('/driving-licenses/upload', [DrivingLicenseController::class, 'uploadCsv'])->name('driving-licenses.upload');
+    Route::delete('/driving-licenses', [DrivingLicenseController::class, 'deleteDrivingLicenses'])->name('driving-licenses.delete');
+    Route::post('/driving-licenses/sendSms', [DrivingLicenseController::class, 'sendSms'])->name('driving-licenses.sendSms');
+    Route::get('/driving-license-logs', [DrivingLicenseController::class, 'logs'])->name('driving-license-logs.index');
     Route::get('/echallan-logs', [EchallanController::class, 'logs'])->name('echallan-logs.index');
 });
 require __DIR__.'/auth.php';
