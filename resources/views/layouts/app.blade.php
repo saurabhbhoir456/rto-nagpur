@@ -43,9 +43,24 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="{{ route('vehicle-permit.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                            <a href="#" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out" onclick="toggleVehiclePermitSubmenu()">
                                 Vehicle Permit
+                                <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
                             </a>
+                            <ul id="vehicle-permit-submenu" class="space-y-4 pl-8" style="display: none;">
+                                <li>
+                                    <a href="{{ route('vehicle-permit.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                        Vehicle Permit
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('vehicle-permit-logs.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                        Vehicle Permit Logs
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="#" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out" onclick="toggleEnvironmentTaxSubmenu()">
@@ -68,9 +83,24 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="{{ route('vehicle-fitness.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
-                                Vehicle Fitness 
+                            <a href="#" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out" onclick="toggleVehicleFitnessSubmenu()">
+                                Vehicle Fitness
+                                <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
                             </a>
+                            <ul id="vehicle-fitness-submenu" class="space-y-4 pl-8" style="display: none;">
+                                <li>
+                                    <a href="{{ route('vehicle-fitness.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                        Vehicle Fitness
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('vehicle-fitness-logs.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                        Vehicle Fitness Logs
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="#" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out" onclick="toggleEchallanSubmenu()">
@@ -93,9 +123,24 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="{{ route('driving-licenses.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
-                                Driving License
+                            <a href="#" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out" onclick="toggleDrivingLicenseSubmenu()">
+                                Driving Licnese
+                                <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
                             </a>
+                            <ul id="driving-license-submenu" class="space-y-4 pl-8" style="display: none;">
+                                <li>
+                                    <a href="{{ route('driving-licenses.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                        Driving License
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('driving-license-logs.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                        Driving License Logs
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                       
@@ -121,8 +166,24 @@
                 submenu.style.display = 'block';
             }
         }
+        function toggleVehiclePermitSubmenu() {
+            var submenu = document.getElementById('vehicle-permit-submenu');
+            if (submenu.style.display === 'block') {
+                submenu.style.display = 'none';
+            } else {
+                submenu.style.display = 'block';
+            }
+        }
         function toggleEchallanSubmenu() {
             var submenu = document.getElementById('echallan-submenu');
+            if (submenu.style.display === 'block') {
+                submenu.style.display = 'none';
+            } else {
+                submenu.style.display = 'block';
+            }
+        }
+        function toggleVehicleFitnessSubmenu() {
+            var submenu = document.getElementById('vehicle-fitness-submenu');
             if (submenu.style.display === 'block') {
                 submenu.style.display = 'none';
             } else {
@@ -132,6 +193,14 @@
         
         function toggleEnvironmentTaxSubmenu() {
             var submenu = document.getElementById('environment-tax-submenu');
+            if (submenu.style.display === 'block') {
+                submenu.style.display = 'none';
+            } else {
+                submenu.style.display = 'block';
+            }
+        }
+        function toggleDrivingLicenseSubmenu() {
+            var submenu = document.getElementById('riving-license-submenu');
             if (submenu.style.display === 'block') {
                 submenu.style.display = 'none';
             } else {
