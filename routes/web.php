@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vehicle-permits/upload', [VehiclePermitController::class, 'uploadCsv'])->name('vehicle-permits.upload');
     Route::delete('/vehicle-permits/delete', [VehiclePermitController::class, 'deleteVehiclePermits'])->name('vehicle-permits.delete');
     Route::post('/vehicle-permits/send-sms', [VehiclePermitController::class, 'sendSms'])->name('vehicle-permits.sendSms');
+    Route::get('/vehicle-permits/logs', [VehiclePermitController::class, 'logs'])->name('vehicle-permit-logs.index');
+
     Route::get('/echallan', action: [EchallanController::class, 'index'])->name('echallan.index');
     Route::get('/echallans', [EchallanController::class, 'index']);
     Route::post('/echallans/upload', [EchallanController::class, 'uploadCsv'])->name('echallans.upload');   
