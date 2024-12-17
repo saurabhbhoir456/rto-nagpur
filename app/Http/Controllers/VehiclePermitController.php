@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\VehiclePermit;
+use App\Models\VehiclePermitSmsLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -85,23 +86,23 @@ class VehiclePermitController extends Controller
 
                 // Save log to vehiclePermitSmsLog table
                 // Note: You need to create a VehiclePermitSmsLog model and a table for it
-                // $vehiclePermitSmsLog = new VehiclePermitSmsLog();
-                // $vehiclePermitSmsLog->vehiclePermit_id = $vehiclePermit->id;
-                // $vehiclePermitSmsLog->mobile_number = $mobileNumber;
-                // $vehiclePermitSmsLog->sms_message = $smsMessage;
-                // $vehiclePermitSmsLog->message_id = $messageId;
-                // $vehiclePermitSmsLog->job_id = $jobId;
-                // $vehiclePermitSmsLog->save();
+                $vehiclePermitSmsLog = new VehiclePermitSmsLog();
+                $vehiclePermitSmsLog->vehiclePermit_id = $vehiclePermit->id;
+                $vehiclePermitSmsLog->mobile_number = $mobileNumber;
+                $vehiclePermitSmsLog->sms_message = $smsMessage;
+                $vehiclePermitSmsLog->message_id = $messageId;
+                $vehiclePermitSmsLog->job_id = $jobId;
+                $vehiclePermitSmsLog->save();
             } catch (\Exception $e) {
                 // Log error message and request data
                 // Note: You need to create a VehiclePermitSmsLog model and a table for it
-                // $vehiclePermitSmsLog = new VehiclePermitSmsLog();
-                // $vehiclePermitSmsLog->vehiclePermit_id = $vehiclePermit->id;
-                // $vehiclePermitSmsLog->mobile_number = $mobileNumber;
-                // $vehiclePermitSmsLog->sms_message = $smsMessage;
-                // $vehiclePermitSmsLog->error_message = $e->getMessage();
-                // $vehiclePermitSmsLog->request_data = json_encode($postData);
-                // $vehiclePermitSmsLog->save();
+                $vehiclePermitSmsLog = new VehiclePermitSmsLog();
+                $vehiclePermitSmsLog->vehiclePermit_id = $vehiclePermit->id;
+                $vehiclePermitSmsLog->mobile_number = $mobileNumber;
+                $vehiclePermitSmsLog->sms_message = $smsMessage;
+                $vehiclePermitSmsLog->error_message = $e->getMessage();
+                $vehiclePermitSmsLog->request_data = json_encode($postData);
+                $vehiclePermitSmsLog->save();
             }
         }
 
