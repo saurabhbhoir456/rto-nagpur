@@ -87,8 +87,7 @@ class DrivingLicenseController extends Controller
                 $messageId = $responseData['MessageData'][0]['MessageId'];
                 $jobId = $responseData['JobId'];
 
-                // Save log to drivinglicensesmslog table
-                // Note: You need to create the drivinglicensesmslog table and model
+                // Save log to drivingLicenseSmsLog table
                 $drivingLicenseSmsLog = new DrivingLicenseSmsLog();
                 $drivingLicenseSmsLog->driving_license_id = $drivingLicense->id;
                 $drivingLicenseSmsLog->mobile_number = $mobileNumber;
@@ -98,7 +97,6 @@ class DrivingLicenseController extends Controller
                 $drivingLicenseSmsLog->save();
             } catch (\Exception $e) {
                 // Log error message and request data
-                // Note: You need to create the drivinglicensesmslog table and model
                 $drivingLicenseSmsLog = new DrivingLicenseSmsLog();
                 $drivingLicenseSmsLog->driving_license_id = $drivingLicense->id;
                 $drivingLicenseSmsLog->mobile_number = $mobileNumber;
@@ -114,7 +112,6 @@ class DrivingLicenseController extends Controller
 
     public function logs()
     {
-        // Note: You need to create the drivinglicensesmslog table and model
         $drivingLicenseSmsLogs = DrivingLicenseSmsLog::all();
         return view('driving-license-logs.index', compact('drivingLicenseSmsLogs'));
     }

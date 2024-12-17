@@ -85,9 +85,8 @@ class VehiclePermitController extends Controller
                 $jobId = $responseData['JobId'];
 
                 // Save log to vehiclePermitSmsLog table
-                // Note: You need to create a VehiclePermitSmsLog model and a table for it
                 $vehiclePermitSmsLog = new VehiclePermitSmsLog();
-                $vehiclePermitSmsLog->vehiclePermit_id = $vehiclePermit->id;
+                $vehiclePermitSmsLog->vehicle_permit_id = $vehiclePermit->id;
                 $vehiclePermitSmsLog->mobile_number = $mobileNumber;
                 $vehiclePermitSmsLog->sms_message = $smsMessage;
                 $vehiclePermitSmsLog->message_id = $messageId;
@@ -95,9 +94,8 @@ class VehiclePermitController extends Controller
                 $vehiclePermitSmsLog->save();
             } catch (\Exception $e) {
                 // Log error message and request data
-                // Note: You need to create a VehiclePermitSmsLog model and a table for it
                 $vehiclePermitSmsLog = new VehiclePermitSmsLog();
-                $vehiclePermitSmsLog->vehiclePermit_id = $vehiclePermit->id;
+                $vehiclePermitSmsLog->vehicle_permit_id = $vehiclePermit->id;
                 $vehiclePermitSmsLog->mobile_number = $mobileNumber;
                 $vehiclePermitSmsLog->sms_message = $smsMessage;
                 $vehiclePermitSmsLog->error_message = $e->getMessage();
@@ -111,8 +109,7 @@ class VehiclePermitController extends Controller
 
     public function logs()
     {
-        // Note: You need to create a VehiclePermitSmsLog model and a table for it
-        // $vehiclePermitSmsLogs = VehiclePermitSmsLog::all();
-        // return view('vehicle-permit-logs.index', compact('vehiclePermitSmsLogs'));
+        $vehiclePermitSmsLogs = VehiclePermitSmsLog::all();
+        return view('vehicle-permit-logs.index', compact('vehiclePermitSmsLogs'));
     }
 }
