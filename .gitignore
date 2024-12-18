@@ -21,3 +21,8 @@ yarn-error.log
 /.zed
 public/web.config
 public/.htaccess
+composer.lock
+inwords/vehicle_tax_template.csv
+database/migrations/2024_12_13_173029_remove_owner_name_from_vehicle_taxes_table.php
+composer.lock
+database/migrations/2024_12_13_173029_remove_owner_name_from_vehicle_taxes_table.php
