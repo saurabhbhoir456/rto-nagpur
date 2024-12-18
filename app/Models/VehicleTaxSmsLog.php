@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VehicleTaxSmsLog extends Model
 {
-    protected $table = 'vehicletaxsmslog';
+    protected $table = 'vehicle_tax_sms_logs';
 
     protected $fillable = [
         'vehicle_tax_id',
