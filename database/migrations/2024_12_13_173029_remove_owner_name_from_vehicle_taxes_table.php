@@ -4,25 +4,25 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class RemoveOwnerNameFromVehicleTaxesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        Schema::table('vehicle_taxes', function (Blueprint $table) {
-            $table->dropColumn('owner_name');
-        });
+        // Check if the column exists before dropping it
+        if (Schema::hasColumn('vehicle_taxes', 'owner_name')) {
+            Schema::table('vehicle_taxes', function (Blueprint $table) {
+                $table->dropColumn('owner_name');
+            });
+        }
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::table('vehicle_taxes', function (Blueprint $table) {
-            $table->string('owner_name');
-        });
+        // Optionally add the column back in case of rollback
+        if (!Schema::hasColumn('vehicle_taxes', 'owner_name')) {
+            Schema::table('vehicle_taxes', function (Blueprint $table) {
+                $table->string('owner_name')->nullable();
+            });
+        }
     }
-};
+}
