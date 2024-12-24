@@ -2,7 +2,9 @@
 
 <nav class="bg-white shadow-md flex items-center justify-between p-4">
     <div class="flex items-center space-x-4">
-        <a href="{{ route('dashboard') }}" class="text-gray-700 font-bold text-lg">Dashboard</a>
+        <a href="{{ route('dashboard') }}" class="text-gray-700 font-bold text-lg">
+            <img src="{{ asset('logo.png') }}" class="w-auto h-12" alt="">
+        </a>
     </div>
     <div class="flex items-center space-x-4">
         <a href="{{ route('profile.edit') }}" class="text-gray-600 hover:text-indigo-600">Profile</a>
