@@ -52,6 +52,10 @@
        
             <form action="{{ route('vehicle-tax.destroyMultiple') }}" method="POST" id="delete-selected-form">
                 @csrf
+<div class="flex justify-end">
+    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded mr-2">Delete Selected</button>
+    <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded" id="send-sms-button">Send SMS to Selected</button>
+</div>
                 <table class="min-w-full bg-white border border-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
@@ -82,8 +86,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">Delete Selected</button>
-                <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded" id="send-sms-button">Send SMS to Selected</button>
+
             </form>
             <script>
                 $(document).ready(function() {
