@@ -58,7 +58,7 @@ class DrivingLicenseController extends Controller
             $mobileNumber = $drivingLicense->mobile_number;
             $expiryDate = $drivingLicense->expiry_date;
 
-            $smsMessage = "Dear $ownerName, driving license no. $drivingLicenseNumber suspended from $expiryDate under motor vehicle act. For further details visit Dy RTO Wardha. - Dy RTO Wardha.";
+            $smsMessage = "Dear $ownerName, driving license no. $drivingLicenseNumber suspended from $expiryDate under motor vehicle act. - Dy RTO Wardha";
 
             $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
             $apiKey = env('SMSGATEWAYHUB_API_KEY');

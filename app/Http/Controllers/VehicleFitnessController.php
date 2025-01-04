@@ -61,8 +61,8 @@ class VehicleFitnessController extends Controller
                 $vehicleNumber = $vehicleFitness->vehicle_number;
                 $mobileNumber = $vehicleFitness->mobile_number;
     
-                $smsMessage = "Fitness Certificate of your vehicle no. $vehicleNumber expired. Renew the fitness of your vehicle urgently to avoid further action. Ignore if renewed. -Dy RTO Wardha.	";
-    
+                $smsMessage = "Fitness Certificate of your vehicle no. $vehicleNumber expired. Renew urgently to avoid further action. Ignore if renewed. -Dy RTO Wardha.";
+
                 $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
                 $apiKey = env('SMSGATEWAYHUB_API_KEY');
                 $senderId = env('SMSGATEWAYHUB_SENDER_ID');
