@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12 w-7/10 h-screen bg-cover bg-center" style="background-image: url('/RTOLight.jpg'); margin: 0 auto;">
+    <div class="py-12 w-7/10 h-screen bg-cover bg-center" style="background-image: url('/RtoLight.jpg'); margin: 0 auto;">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div style="width: 25%; float: left;">{{ __("You're logged in!") }}</div>
