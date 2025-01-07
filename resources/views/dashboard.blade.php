@@ -8,13 +8,12 @@
 
     <div class="py-12 w-7/10 h-screen bg-cover bg-center" style="background-image: url('/RTOLight.jpg'); margin: 0 auto;">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100">Message Balance</h2>
-                        <p class="text-2xl font-bold text-green-500">{{ number_format($balance) }}</p>
-                    </div>
+                    <div style="width: 25%; float: left;">{{ __("You're logged in!") }}</div>
+                        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md" style="width: 25%; float: right; text-align: center;">
+                            <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100">Message Balance</h2>
+                            <p class="text-2xl font-bold text-green-500">{{ number_format($balance) }}</p>
+                        </div>
                 </div>
                 
             </div>
