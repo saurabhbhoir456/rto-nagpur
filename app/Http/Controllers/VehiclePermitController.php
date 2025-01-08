@@ -48,7 +48,8 @@ class VehiclePermitController extends Controller
 
     public function sendSms(Request $request)
     {
-        $vehiclePermitIds = json_decode($request->input('vehiclePermitIds'), true);
+        $vehiclePermitIds = json_decode($request->input('vehicle_permit_ids'), true);
+
         $vehiclePermits = VehiclePermit::whereIn('id', $vehiclePermitIds)->get();
 
         foreach ($vehiclePermits as $vehiclePermit) {
