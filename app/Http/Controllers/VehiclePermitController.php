@@ -56,7 +56,7 @@ class VehiclePermitController extends Controller
             $vehicleNumber = $vehiclePermit->vehicle_number;
             $mobileNumber = $vehiclePermit->mobile_number;
 
-            $smsMessage = "Kind attention, vehicle permit is pending against your vehicle no. $vehicleNumber. Pay vehicle permit in 7 days to avoid blacklisting. Ignore if paid. - Dy RTO Wardha.";
+            $smsMessage = "Permit of your vehicle no. $vehicleNumber expired. Renew the permit of your vehicle urgently to avoid further action. Ignore if renewed. - Dy RTO Wardha.
 
             $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
             $apiKey = env('SMSGATEWAYHUB_API_KEY');
