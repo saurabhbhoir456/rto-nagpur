@@ -56,7 +56,7 @@ class VehiclePermitController extends Controller
             $vehicleNumber = $vehiclePermit->vehicle_number;
             $mobileNumber = $vehiclePermit->mobile_number;
 
-            $smsMessage = "Permit of your vehicle no. $vehicleNumber expired. Renew the permit of your vehicle urgently to avoid further action. Ignore if renewed. - Dy RTO Wardha.
+            $smsMessage = "Permit of your vehicle no. $vehicleNumber expired. Renew the permit of your vehicle urgently to avoid further action. Ignore if renewed. - Dy RTO Wardha.";
 
             $apiUrl = "https://www.smsgatewayhub.com/api/mt/SendSMS";
             $apiKey = env('SMSGATEWAYHUB_API_KEY');
