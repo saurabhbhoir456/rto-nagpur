@@ -22,6 +22,11 @@
                 <div class="p-4">
                     <!-- <h2 class="text-2xl font-bold text-gray-200 mb-6">Dashboard</h2> -->
                     <ul class="space-y-4">
+    <li>
+        <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+            Dashboard
+        </a>
+    </li>
                         <li>
                             <a href="#" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out" onclick="toggleVehicleTaxSubmenu()">
                                 Vehicle Tax
