@@ -11,6 +11,7 @@ use App\Http\Controllers\DrivingLicenseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SMSLogsController;
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
@@ -23,6 +24,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/sms-logs', [SMSLogsController::class, 'index_get'])->name('sms-logs.index');
+Route::post('/sms-logs', [SMSLogsController::class, 'index_post'])->name('sms-logs.index');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 

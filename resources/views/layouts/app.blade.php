@@ -93,6 +93,11 @@
                                
                             
                         </li>
+                        <li>
+                            <a href="{{ route('sms-logs.index') }}" class="flex items-center px-4 py-2 text-lg font-semibold bg-gray-700 hover:bg-indigo-600 rounded-lg transition-colors duration-300 ease-in-out">
+                                SMS Logs
+                            </a>
+                        </li>
                     </ul>
                       
                 </div>
