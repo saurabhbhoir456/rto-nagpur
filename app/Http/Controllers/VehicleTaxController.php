@@ -152,6 +152,20 @@ public function sendSms(Request $request)
         // Open the uploaded CSV file
         $file = fopen($request->file('csv_file'), 'r');
         
+        // Check the number of rows in the CSV file
+        $rowCount = 0;
+        while (($row = fgetcsv($file, 1000, ",")) !== false) {
+            $rowCount++;
+        }
+        fclose($file);
+
+        if ($rowCount > 201) {
+            return redirect()->route('vehicle-tax.index')->with('error', 'CSV file should not exceed 201 rows.');
+        }
+
+        // Reopen the file to process it
+        $file = fopen($request->file('csv_file'), 'r');
+        
         // Skip the first row if it contains column headers
         $isFirstRow = true;
 
@@ -173,7 +187,11 @@ public function sendSms(Request $request)
             ]);
 
             if ($validator->fails()) {
-                // Skip this row or handle the error
+                // Log the error and skip this row
+                Log::error('CSV Row Validation Failed', [
+                    'row' => $row,
+                    'errors' => $validator->errors()
+                ]);
                 continue;
             }
 

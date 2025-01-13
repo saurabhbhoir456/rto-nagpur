@@ -14,18 +14,31 @@ class EnvironmentTaxController extends Controller
         $environmentTaxes = EnvironmentTax::all();
         return view('environment-tax.index', compact('environmentTaxes'));
     }
+    
+    
     public function uploadCsv(Request $request)
     {
         $file = $request->file('csv_file');
         $data = array();
         $rowCounter = 0;
+        $maxRows = 201;
+    
         if (($handle = fopen($file, 'r')) !== FALSE) {
             while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if ($rowCounter > 0) {
+                    if ($rowCounter > $maxRows) {
+                        return back()->withErrors(['csv_file' => 'CSV file should not exceed 201 rows.']);
+                    }
+    
+                    $mobileNumber = $row[1];
+                    if (!preg_match('/^\d{10}$/', $mobileNumber)) {
+                        return back()->withErrors(['csv_file' => 'Mobile number should be 10 digits long.']);
+                    }
+    
                     $expiryDate = date('Y-m-d', strtotime($row[2]));
                     $data[] = array(
                         'vehicle_number' => $row[0],
-                        'mobile_number' => $row[1],
+                        'mobile_number' => $mobileNumber,
                         'expiry_date' => $expiryDate,
                     );
                 }
@@ -33,9 +46,13 @@ class EnvironmentTaxController extends Controller
             }
             fclose($handle);
         }
+    
+        // Process the $data array as needed
+        // ...
         EnvironmentTax::insert($data);
-        return redirect()->back()->with('success', 'CSV file uploaded successfully');
+        return back()->with('success', 'CSV file uploaded successfully.');
     }
+
     public function deleteEnvironmentTaxes(Request $request)
     {
         $environmentTaxIds = json_decode($request->input('environmentTaxes'), true);

@@ -30,7 +30,9 @@ $todate = date('m/d/Y', strtotime($request->input('todate', date('Y-m-d'))));
             ]
         ]);
         $data = json_decode($response->getBody()->getContents(), true); // Decode JSON response to an array
-      
+        if (is_null($data)) {
+            $data = [];
+        }
         // Sort the data based on submit date
         usort($data, function($a, $b) {
             return strtotime($b['SubmitDate']) - strtotime($a['SubmitDate']);
@@ -60,7 +62,9 @@ $todate = date('m/d/Y', strtotime($request->input('todate', date('Y-m-d'))));
             ]
         ]);
         $data = json_decode($response->getBody()->getContents(), true); // Decode JSON response to an array
-      
+        if (is_null($data)) {
+            $data = [];
+        }
         // Sort the data based on submit date
         usort($data, function($a, $b) {
             return strtotime($b['SubmitDate']) - strtotime($a['SubmitDate']);

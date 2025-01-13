@@ -24,6 +24,14 @@ class VehiclePermitController extends Controller
         if (($handle = fopen($file, 'r')) !== FALSE) {
             while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if ($rowCounter > 0) {
+                    if ($rowCounter > 201) {
+                        fclose($handle);
+                        return redirect()->back()->with('error', 'CSV file should not exceed 201 rows.');
+                    }
+                    if (!preg_match('/^\d{10}$/', $row[1])) {
+                        fclose($handle);
+                        return redirect()->back()->with('error', 'Mobile number should be 10 digits.');
+                    }
                     $expiryDate = date('Y-m-d', strtotime($row[2]));
                     $data[] = array(
                         'vehicle_number' => $row[0],

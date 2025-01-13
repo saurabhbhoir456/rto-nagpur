@@ -14,14 +14,23 @@ class EchallanController extends Controller
         $echallans = Echallan::all();
         return view('echallan.index', compact('echallans'));
     }
+    
+
     public function uploadCsv(Request $request)
     {
         $file = $request->file('csv_file');
         $data = array();
         $rowCounter = 0;
+        $maxRows = 201;
         if (($handle = fopen($file, 'r')) !== FALSE) {
             while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if ($rowCounter > 0) {
+                    if ($rowCounter > $maxRows) {
+                        return response()->json(['error' => 'CSV file exceeds the maximum number of rows (201).'], 400);
+                    }
+                    if (!preg_match('/^\d{10}$/', $row[1])) {
+                        return response()->json(['error' => 'Mobile number must be 10 digits.'], 400);
+                    }
                     $expiryDate = date('Y-m-d', strtotime($row[2]));
                     $data[] = array(
                         'vehicle_number' => $row[0],
@@ -34,7 +43,7 @@ class EchallanController extends Controller
             fclose($handle);
         }
         Echallan::insert($data);
-        return redirect()->back()->with('success', 'CSV file uploaded successfully');
+        return response()->json(['success' => 'CSV file uploaded successfully.']);
     }
     public function deleteEchallans(Request $request)
     {
