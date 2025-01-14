@@ -1,4 +1,3 @@
-{{-- Resources/views/sms-logs/index.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
@@ -16,55 +15,53 @@
     </div>
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
 </form>
+
 {{-- Display the data in a datatable format --}}
 <div class="container mx-auto p-4 pt-0 md:p-6 lg:p-12 xl:p-24 mb-4">
-<table id="sms-logs-table" class="table table-striped table-bordered w-full text-left mt-0">
-        <thead class="thead-light">
+    <table id="sms-logs-table" class="table table-striped table-bordered" style="width:100%">
+        <thead class="bg-gray-100">
             <tr>
-            <th class="px-4 py-2">Mobile Number</th>
-            <th class="px-4 py-2">Sender ID</th>
-            <th class="px-4 py-2">Message</th>
-            <th class="px-4 py-2">Submit Date</th>
-            <th class="px-4 py-2">Message Status</th>
-            <th class="px-4 py-2">Delivery Date</th>
-            <th class="px-4 py-2">Alias Message ID</th>
-            <th class="px-4 py-2">Type</th>
+                <th class="px-4 py-2">Mobile Number</th>
+                <th class="px-4 py-2">Sender ID</th>
+                <th class="px-4 py-2">Message</th>
+                <th class="px-4 py-2">Submit Date</th>
+                <th class="px-4 py-2">Message Status</th>
+                <th class="px-4 py-2">Delivery Date</th>
+                <th class="px-4 py-2">Alias Message ID</th>
+                <th class="px-4 py-2">Type</th>
             </tr>
         </thead>
         <tbody>
             @foreach($data as $log)
                 <tr>
-<td class="border px-4 py-2">{{ $log['MobileNumber'] ?? '' }}</td>
-<td class="border px-4 py-2">{{ $log['SenderId'] ?? '' }}</td>
-<td class="border px-4 py-2">{{ $log['Message'] ?? '' }}</td>
-<td class="border px-4 py-2">{{ $log['SubmitDate'] ?? '' }}</td>
-<td class="border px-4 py-2">{{ $log['MessageStatus'] ?? '' }}</td>
-<td class="border px-4 py-2">{{ $log['DeliveryDate'] ?? '' }}</td>
-<td class="border px-4 py-2">{{ $log['AliasMessageId'] ?? '' }}</td>
-<td class="border px-4 py-2">{{ $log['Type'] ?? '' }}</td>
+                    <td class="border px-4 py-2">{{ $log['MobileNumber'] ?? '' }}</td>
+                    <td class="border px-4 py-2">{{ $log['SenderId'] ?? '' }}</td>
+                    <td class="border px-4 py-2">{{ $log['Message'] ?? '' }}</td>
+                    <td class="border px-4 py-2">{{ $log['SubmitDate'] ?? '' }}</td>
+                    <td class="border px-4 py-2">{{ $log['MessageStatus'] ?? '' }}</td>
+                    <td class="border px-4 py-2">{{ $log['DeliveryDate'] ?? '' }}</td>
+                    <td class="border px-4 py-2">{{ $log['AliasMessageId'] ?? '' }}</td>
+                    <td class="border px-4 py-2">{{ $log['Type'] ?? '' }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-   
 </div>
 
-{{-- Initialize the datatable --}}
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
+{{-- Add DataTable and Bootstrap 5 JS and CSS --}}
+<link href="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datatables.net@1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#sms-logs-table').DataTable({
             "scrollY": "80vh",
             "scrollCollapse": true,
-            "paging": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
+            "responsive": true
         });
     });
 </script>
+
 @endsection
