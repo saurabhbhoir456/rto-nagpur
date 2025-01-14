@@ -16,6 +16,11 @@
         {{ session()->get('success') }}
     </div>
 @endif
+@if(session()->has('error'))
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        {{ session()->get('error') }}
+    </div>
+@endif
     <form action="{{ route('driving-licenses.upload') }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="file" name="csv_file" accept=".csv">
@@ -58,41 +63,47 @@
                 $('input[name="drivingLicenses[]"]').prop('checked', this.checked);
             });
 
-            $('#deleteButton').on('click', function() {
-                var selectedDrivingLicenses = [];
-                $('input[name="drivingLicenses[]"]:checked').each(function() {
-                    selectedDrivingLicenses.push($(this).val());
-                });
+$('#deleteButton').on('click', function() {
+    var selectedDrivingLicenses = [];
+    $('input[name="drivingLicenses[]"]:checked').each(function() {
+        selectedDrivingLicenses.push($(this).val());
+    });
 
-                if (selectedDrivingLicenses.length > 0) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '{{ route('driving-licenses.delete') }}',
-                        data: { 
-                            _token: $('meta[name="csrf-token"]').attr('content'),
-                            drivingLicenses: JSON.stringify(selectedDrivingLicenses) 
-                        },
-                        success: function(data) {
-                            console.log(data);
-                            // Update the table after the delete request is sent
-                            selectedDrivingLicenses.forEach(function(id) {
-                                $('tr:has(input[value="' + id + '"])').remove();
-                            });
-                        }
-                    });
-                }
+    if (selectedDrivingLicenses.length === 0) {
+        alert("Please select at least one driving license to delete.");
+        return;
+    }
+
+    $.ajax({
+        type: 'DELETE',
+        url: '{{ route('driving-licenses.delete') }}',
+        data: { 
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            drivingLicenses: JSON.stringify(selectedDrivingLicenses) 
+        },
+        success: function(data) {
+            console.log(data);
+            // Update the table after the delete request is sent
+            selectedDrivingLicenses.forEach(function(id) {
+                $('tr:has(input[value="' + id + '"])').remove();
             });
+        }
+    });
+});
 
-            $('#sendSmsButton').on('click', function() {
-                var selectedDrivingLicenses = [];
-                $('input[name="drivingLicenses[]"]:checked').each(function() {
-                    selectedDrivingLicenses.push($(this).val());
-                });
+$('#sendSmsButton').on('click', function() {
+    var selectedDrivingLicenses = [];
+    $('input[name="drivingLicenses[]"]:checked').each(function() {
+        selectedDrivingLicenses.push($(this).val());
+    });
 
-                if (selectedDrivingLicenses.length > 0) {
-                    $('input[name="driving_license_ids"]').val(JSON.stringify(selectedDrivingLicenses));
-                }
-            });
+    if (selectedDrivingLicenses.length === 0) {
+        alert("Please select at least one driving license to send SMS.");
+        return;
+    }
+
+    $('input[name="driving_license_ids"]').val(JSON.stringify(selectedDrivingLicenses));
+});
         });
     </script>
 @endsection

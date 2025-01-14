@@ -15,6 +15,11 @@
         {{ session()->get('success') }}
     </div>
 @endif
+@if(session()->has('error'))
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        {{ session()->get('error') }}
+    </div>
+@endif
     <!-- Form for uploading CSV -->
     <form action="{{ route('vehicle-tax.upload') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-4">
         @csrf

@@ -148,65 +148,42 @@ public function sendSms(Request $request)
         $request->validate([
             'csv_file' => 'required|file|mimes:csv,txt',
         ]);
-
-        // Open the uploaded CSV file
-        $file = fopen($request->file('csv_file'), 'r');
-        
-        // Check the number of rows in the CSV file
-        $rowCount = 0;
-        while (($row = fgetcsv($file, 1000, ",")) !== false) {
-            $rowCount++;
-        }
-        fclose($file);
-
-        if ($rowCount > 201) {
-            return redirect()->route('vehicle-tax.index')->with('error', 'CSV file should not exceed 201 rows.');
-        }
-
-        // Reopen the file to process it
-        $file = fopen($request->file('csv_file'), 'r');
-        
-        // Skip the first row if it contains column headers
-        $isFirstRow = true;
-
-        while (($row = fgetcsv($file, 1000, ",")) !== false) {
-            if ($isFirstRow) {
-                $isFirstRow = false;
-                continue;
+    
+        $file = $request->file('csv_file');
+        $data = array();
+        $rowCounter = 0;
+    
+        if (($handle = fopen($file->getRealPath(), 'r')) !== FALSE) {
+            while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($rowCounter > 0) {
+                    if ($rowCounter > 201) {
+                        fclose($handle);
+                        return redirect()->back()->with('error', 'CSV file should not exceed 201 rows.');
+                    }
+                    if (!preg_match('/^\d{10}$/', $row[0])) { // Adjusted to match the CSV column order
+                        fclose($handle);
+                        return redirect()->back()->with('error', 'Mobile number should be 10 digits.');
+                    }
+                    $expiryDate = date('Y-m-d', strtotime($row[2])); // Adjusted to match the CSV column order
+                    $data[] = array(
+                        'vehicle_number' => $row[1], // Adjusted to match the CSV column order
+                        'mobile_number' => $row[0], // Adjusted to match the CSV column order
+                        'due_date' => $expiryDate,
+                    );
+                }
+                $rowCounter++;
             }
-
-            // Validate each row
-            $validator = Validator::make([
-                'mobile_number' => $row[0],
-                'vehicle_number' => $row[1],
-                'due_date' => $row[2],
-            ], [
-                'mobile_number' => 'required|regex:/^[6-9][0-9]{9}$/',
-                'vehicle_number' => 'required|string|max:255',
-                'due_date' => 'required|date_format:d-m-Y',
-            ]);
-
-            if ($validator->fails()) {
-                // Log the error and skip this row
-                Log::error('CSV Row Validation Failed', [
-                    'row' => $row,
-                    'errors' => $validator->errors()
-                ]);
-                continue;
-            }
-
-            // Insert the data into the database
-            VehicleTax::create([
-                'mobile_number' => $row[0],
-                'vehicle_number' => $row[1],
-                'due_date' => Carbon::createFromFormat('d-m-Y', $row[2]),
-            ]);
+            fclose($handle);
+        } else {
+            return redirect()->back()->with('error', 'Unable to open the file.');
         }
-
-        // Close the file
-        fclose($file);
-
-        return redirect()->route('vehicle-tax.index')->with('success', 'CSV uploaded successfully!');
+    
+        if (!empty($data)) {
+            VehicleTax::insert($data);
+            return redirect()->back()->with('success', 'CSV file uploaded successfully');
+        } else {
+            return redirect()->back()->with('error', 'No data found in the CSV file.');
+        }
     }
     public function filterVehicleTaxes(Request $request)
     {

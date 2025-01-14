@@ -15,6 +15,11 @@
         {{ session()->get('success') }}
     </div>
 @endif
+@if(session()->has('error'))
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        {{ session()->get('error') }}
+    </div>
+@endif
     <form action="{{ route('echallans.upload') }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="file" name="csv_file" accept=".csv">
@@ -61,23 +66,26 @@
                     selectedEchallans.push($(this).val());
                 });
 
-                if (selectedEchallans.length > 0) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '{{ route('echallans.delete') }}',
-                        data: { 
-                            _token: $('meta[name="csrf-token"]').attr('content'),
-                            echallans: JSON.stringify(selectedEchallans) 
-                        },
-                        success: function(data) {
-                            console.log(data);
-                            // Update the table after the delete request is sent
-                            selectedEchallans.forEach(function(id) {
-                                $('tr:has(input[value="' + id + '"])').remove();
-                            });
-                        }
-                    });
+                if (selectedEchallans.length === 0) {
+                    alert('Please select at least one Echallan to delete.');
+                    return;
                 }
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '{{ route('echallans.delete') }}',
+                    data: { 
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        echallans: JSON.stringify(selectedEchallans) 
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        // Update the table after the delete request is sent
+                        selectedEchallans.forEach(function(id) {
+                            $('tr:has(input[value="' + id + '"])').remove();
+                        });
+                    }
+                });
             });
 
             $('#sendSmsButton').on('click', function() {
@@ -85,6 +93,11 @@
                 $('input[name="echallans[]"]:checked').each(function() {
                     selectedEchallans.push($(this).val());
                 });
+
+                if (selectedEchallans.length === 0) {
+                    alert('Please select at least one Echallan to send SMS.');
+                    return;
+                }
 
                 if (selectedEchallans.length > 0) {
                     $('input[name="echallan_ids"]').val(JSON.stringify(selectedEchallans));
