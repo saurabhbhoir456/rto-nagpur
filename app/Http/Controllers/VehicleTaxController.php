@@ -158,7 +158,7 @@ public function sendSms(Request $request)
                 if ($rowCounter > 0) {
                     if ($rowCounter > 201) {
                         fclose($handle);
-                        return redirect()->back()->with('error', 'CSV file should not exceed 201 rows.');
+                        return redirect()->back()->with('error', 'CSV file should not exceed 200 rows.');
                     }
                     if (!preg_match('/^\d{10}$/', $row[0])) { // Adjusted to match the CSV column order
                         fclose($handle);

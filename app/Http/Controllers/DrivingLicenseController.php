@@ -39,7 +39,7 @@ class DrivingLicenseController extends Controller
 
     // Check if the row count exceeds 201
     if ($rowCounter > 201) {
-        return redirect()->back()->withErrors(['csv_file' => 'CSV file should not have more than 201 rows.']);
+        return redirect()->back()->withErrors(['csv_file' => 'CSV file should not have more than 200 rows.']);
     }
 
     // Reset the row counter and process the file

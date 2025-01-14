@@ -26,7 +26,7 @@ class EchallanController extends Controller
             while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if ($rowCounter > 0) {
                     if ($rowCounter > $maxRows) {
-                        return response()->json(['error' => 'CSV file exceeds the maximum number of rows (201).'], 400);
+                        return response()->json(['error' => 'CSV file exceeds the maximum number of rows (200).'], 400);
                     }
                     if (!preg_match('/^\d{10}$/', $row[1])) {
                         return response()->json(['error' => 'Mobile number must be 10 digits.'], 400);

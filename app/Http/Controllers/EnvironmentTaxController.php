@@ -27,7 +27,7 @@ class EnvironmentTaxController extends Controller
             while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if ($rowCounter > 0) {
                     if ($rowCounter > $maxRows) {
-                        return back()->withErrors(['csv_file' => 'CSV file should not exceed 201 rows.']);
+                        return back()->withErrors(['csv_file' => 'CSV file should not exceed 200 rows.']);
                     }
     
                     $mobileNumber = $row[1];

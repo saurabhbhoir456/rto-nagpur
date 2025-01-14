@@ -26,7 +26,7 @@ class VehiclePermitController extends Controller
                 if ($rowCounter > 0) {
                     if ($rowCounter > 201) {
                         fclose($handle);
-                        return redirect()->back()->with('error', 'CSV file should not exceed 201 rows.');
+                        return redirect()->back()->with('error', 'CSV file should not exceed 200 rows.');
                     }
                     if (!preg_match('/^\d{10}$/', $row[1])) {
                         fclose($handle);
