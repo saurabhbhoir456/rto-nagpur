@@ -7,7 +7,8 @@
         </a>
     </div>
     <div class="flex items-center space-x-4">
-        <a href="{{ route('profile.edit') }}" class="text-gray-600 hover:text-indigo-600">Profile</a>
+        <span class="text-gray-600 hover:text-indigo-600">Balance: {{ number_format($balance) }}</span>
+<a href="{{ route('profile.edit') }}" class="text-gray-600 hover:text-indigo-600">Profile</a>
         <!-- <a href="#" class="text-gray-600 hover:text-indigo-600">Settings</a> -->
         
         <!-- Logout Form -->

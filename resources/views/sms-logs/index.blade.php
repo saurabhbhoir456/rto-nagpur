@@ -18,8 +18,8 @@
 </form>
 {{-- Display the data in a datatable format --}}
 <div class="container mx-auto p-4 pt-0 md:p-6 lg:p-12 xl:p-24 mb-4">
-<table id="sms-logs-table" class="table-auto w-full text-left mt-0">
-        <thead class="bg-gray-100">
+<table id="sms-logs-table" class="table table-striped table-bordered w-full text-left mt-0">
+        <thead class="thead-light">
             <tr>
             <th class="px-4 py-2">Mobile Number</th>
             <th class="px-4 py-2">Sender ID</th>
@@ -52,28 +52,19 @@
 {{-- Initialize the datatable --}}
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
 <script>
     $(document).ready(function() {
         $('#sms-logs-table').DataTable({
             "scrollY": "80vh",
             "scrollCollapse": true,
-        });
-        $('#datatable').DataTable({
-            "ordering": false
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
         });
     });
 </script>
-{{-- <style>
-    table.dataTable thead .sorting {
-        background-image: url("https://cdn.datatables.net/1.13.4/images/sort_both.png");
-    }
-    
-    table.dataTable thead .sorting_asc {
-        background-image: url("https://cdn.datatables.net/1.13.4/images/sort_asc.png");
-    }
-    
-    table.dataTable thead .sorting_desc {
-        background-image: url("https://cdn.datatables.net/1.13.4/images/sort_desc.png");
-    }
-    </style> --}}
 @endsection
