@@ -82,6 +82,8 @@
                             });
                         }
                     });
+                } else {
+                    alert('Please select at least one record to delete.');
                 }
             });
 
@@ -93,6 +95,8 @@
 
                 if (selectedVehiclePermits.length > 0) {
                     $('input[name="vehicle_permit_ids"]').val(JSON.stringify(selectedVehiclePermits));
+                } else {
+                    alert('Please select at least one record to send SMS.');
                 }
             });
         });

@@ -82,6 +82,8 @@
                             });
                         }
                     });
+                } else {
+                    alert('Please select at least one record to delete.');
                 }
             });
 
@@ -93,6 +95,8 @@
 
                 if (selectedVehicleFitnesses.length > 0) {
                     $('input[name="vehicle_fitness_ids"]').val(JSON.stringify(selectedVehicleFitnesses));
+                } else {
+                    alert('Please select at least one record to send SMS.');
                 }
             });
         });

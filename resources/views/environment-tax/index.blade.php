@@ -82,6 +82,8 @@
                             });
                         }
                     });
+                } else {
+                    alert('Please select at least one record to delete.');
                 }
             });
 
@@ -93,6 +95,9 @@
 
                 if (selectedEnvironmentTaxes.length > 0) {
                     $('input[name="environment_tax_ids"]').val(JSON.stringify(selectedEnvironmentTaxes));
+                } else {
+                    alert('Please select at least one record to send SMS.');
+                    return false;
                 }
             });
         });

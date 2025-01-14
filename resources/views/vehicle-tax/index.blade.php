@@ -106,6 +106,11 @@
                             vehicleTaxIds.push($(this).val());
                         });
         
+                        if (vehicleTaxIds.length === 0) {
+                            alert('Please select at least one record to delete.');
+                            return;
+                        }
+        
                         $.ajax({
                             type: 'POST',
                             url: '{{ route('vehicle-tax.destroyMultiple') }}',
@@ -125,6 +130,11 @@
                         $('input[name="vehicle_tax_ids[]"]:checked').each(function() {
                             vehicleTaxIds.push($(this).val());
                         });
+        
+                        if (vehicleTaxIds.length === 0) {
+                            alert('Please select at least one record to send SMS.');
+                            return;
+                        }
         
                         $.ajax({
                             type: 'POST',
