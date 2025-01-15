@@ -53,8 +53,8 @@ $todate = date('m/d/Y', strtotime($request->input('todate', date('Y-m-d'))));
                 'password' => env('SMSGATEWAYHUB_PASSWORD'),
                 'fromdate' => $current_date,
                 'todate' => $current_date,
-                // 'fromdate' => '01/08/2025',
-                // 'todate' => '01/08/2025',
+                // 'fromdate' => '01/15/2025',
+                // 'todate' => '01/15/2025',
                 'format' => 'json' // Add this if the API supports it
             ],
             'headers' => [

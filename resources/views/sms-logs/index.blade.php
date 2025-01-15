@@ -3,17 +3,19 @@
 @section('content')
 <form method="POST" action="{{ route('sms-logs.index') }}">
     @csrf
-    <div class="flex flex-row mb-4">
-        <div class="w-1/2">
+    <div class="flex flex-row justify-end mb-4">
+        <div class="w-1/4 mr-2">
             <label for="fromdate" class="text-gray-700">From Date:</label>
             <input type="date" id="fromdate" name="fromdate" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
         </div>
-        <div class="w-1/2">
+        <div class="w-1/4 mr-2">
             <label for="todate" class="text-gray-700">To Date:</label>
             <input type="date" id="todate" name="todate" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
         </div>
+        <div class="flex items-end">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+        </div>
     </div>
-    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
 </form>
 
 {{-- Display the data in a datatable format --}}
