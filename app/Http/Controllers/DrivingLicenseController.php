@@ -16,47 +16,25 @@ class DrivingLicenseController extends Controller
         return view('driving-licenses.index', compact('drivingLicenses'));
     }
 
-
     public function uploadCsv(Request $request)
-{
-    // Validate the request
-    $request->validate([
-        'csv_file' => 'required|file|mimes:csv,txt|max:2048', // Ensure the file is a CSV and not larger than 2MB
-    ]);
+    {
+        $file = $request->file('csv_file');
+        $data = array();
+        $rowCounter = 0;
+        $maxRows = 201;
 
-    $file = $request->file('csv_file');
-    $data = array();
-    $rowCounter = 0;
-    $errors = [];
-
-    // Open the file and count the rows
-    if (($handle = fopen($file, 'r')) !== FALSE) {
-        while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            $rowCounter++;
-        }
-        fclose($handle);
-    }
-
-    // Check if the row count exceeds 201
-    if ($rowCounter > 201) {
-        return redirect()->back()->withErrors(['csv_file' => 'CSV file should not have more than 200 rows.']);
-    }
-
-    // Reset the row counter and process the file
-    $rowCounter = 0;
-    if (($handle = fopen($file, 'r')) !== FALSE) {
-        while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            if ($rowCounter > 0) {
-                // Validate mobile number and driving license number
-                if (strlen($row[0]) != 13) {
-                    $errors[] = "Row $rowCounter: Driving license number should be 13 characters.";
-                }
-                if (strlen($row[3]) != 10 || !is_numeric($row[3])) {
-                    $errors[] = "Row $rowCounter: Mobile number should be 10 digits.";
-                }
-
-                // If no errors, add the row to the data array
-                if (empty($errors)) {
+        if (($handle = fopen($file, 'r')) !== FALSE) {
+            while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($rowCounter > 0) {
+                    if ($rowCounter > $maxRows) {
+                        return redirect()->back()->with('error', 'CSV file exceeds the maximum number of rows (200).');
+                    }
+                    if (!preg_match('/^\d{10}$/', $row[3])) {
+                        return redirect()->back()->with('error', 'Mobile number must be 10 digits.');
+                    }
+                    if (strlen($row[0]) != 15) {
+                        return redirect()->back()->with('error', 'Driving license number should be 15 characters.');
+                    }
                     $expiryDate = date('Y-m-d', strtotime($row[2]));
                     $data[] = array(
                         'driving_license_number' => $row[0],
@@ -65,20 +43,14 @@ class DrivingLicenseController extends Controller
                         'mobile_number' => $row[3],
                     );
                 }
+                $rowCounter++;
             }
-            $rowCounter++;
+            fclose($handle);
         }
-        fclose($handle);
-    }
 
-    // If there are errors, redirect back with errors
-    if (!empty($errors)) {
-        return redirect()->back()->withErrors($errors);
+        DrivingLicense::insert($data);
+        return redirect()->back()->with('success', 'CSV file uploaded successfully');
     }
-
-    DrivingLicense::insert($data);
-    return redirect()->back()->with('success', 'CSV file uploaded successfully');
-}
 
     public function deleteDrivingLicenses(Request $request)
     {
