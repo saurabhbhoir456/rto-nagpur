@@ -153,7 +153,7 @@ public function sendSms(Request $request)
         $data = array();
         $rowCounter = 0;
     
-        if (($handle = fopen($file->getRealPath(), 'r')) !== FALSE) {
+        if (($handle = fopen($file, 'r')) !== FALSE) {
             while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if ($rowCounter > 0) {
                     if ($rowCounter > 201) {
