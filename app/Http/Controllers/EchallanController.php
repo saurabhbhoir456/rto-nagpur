@@ -26,10 +26,10 @@ class EchallanController extends Controller
             while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if ($rowCounter > 0) {
                     if ($rowCounter > $maxRows) {
-                        return response()->json(['error' => 'CSV file exceeds the maximum number of rows (200).'], 400);
+                        return redirect()->back()->with('error', 'CSV file exceeds the maximum number of rows (200).');
                     }
                     if (!preg_match('/^\d{10}$/', $row[1])) {
-                        return response()->json(['error' => 'Mobile number must be 10 digits.'], 400);
+                        return redirect()->back()->with('error', 'Mobile number must be 10 digits.');
                     }
                     $expiryDate = date('Y-m-d', strtotime($row[2]));
                     $data[] = array(
@@ -43,7 +43,7 @@ class EchallanController extends Controller
             fclose($handle);
         }
         Echallan::insert($data);
-        return response()->json(['success' => 'CSV file uploaded successfully.']);
+        return redirect()->back()->with('success', 'CSV file uploaded successfully');
     }
     public function deleteEchallans(Request $request)
     {
